@@ -9,7 +9,7 @@ This project is a full DevOps pipeline built around a cloud-native microservices
 ```
 devops-microservices-demo/
 │
-├── src/                        # Source code of microservices (from Google repo)
+├── src/                       # Source code of microservices (from Google repo)
 │
 ├── helm-charts/               # Helm charts for Kubernetes deployments
 │   └── <service-name>/        # Each microservice has its own chart

@@ -80,14 +80,14 @@ jobs:
                 token: ${{ secrets.MY_ACTIONS_TOKEN }}
 
             - name: Update tag in kubernetes deployment manifest
-                run: |
-                  sed -i "s|image: .*|image: ${{ secrets.DOCKER_USERNAME }}/productcatalogservice:${{github.run_id}}|" kubernetes/productcatalogservice/deploy.yaml
-              
+              run: |
+                sed -i "s|image: .*|image: ${{ secrets.DOCKER_USERNAME }}/productcatalogservice:${{github.run_id}}|" kubernetes/productcatalogservice/deploy.yaml
+
             - name: Commit and Push Changes
-                run: |
-                  git config --global user.email "fetuyee@gmail.com"
-                  git config --global user.name "iamfet"
-                  git add kubernetes/productcatalogservice/deploy.yaml
-                  git commit -m "[CI]: Update product catalog image tag"
-                  git push origin HEAD:main -f
+              run: |
+                git config --global user.email "fetuyee@gmail.com"
+                git config --global user.name "iamfet"
+                git add kubernetes/productcatalogservice/deploy.yaml
+                git commit -m "[CI]: Update product catalog image tag"
+                git push origin HEAD:main -f
 

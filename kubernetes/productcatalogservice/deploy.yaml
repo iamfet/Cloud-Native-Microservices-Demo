@@ -18,7 +18,7 @@ spec:
           value: '3550'
         - name: DISABLE_PROFILER
           value: '1'
-        image: iamfet/productcatalogservice:14718024806
+        image: iamfet/productcatalogservice:14718048680
         livenessProbe:
           grpc:
             port: 3550

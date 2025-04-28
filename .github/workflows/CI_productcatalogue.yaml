@@ -80,7 +80,7 @@ jobs:
                 token: ${{ secrets.MY_ACTIONS_TOKEN }}
 
             - name: Update tag in kubernetes deployment manifest
-                run: | 
+                run: |
                   sed -i "s|image: .*|image: ${{ secrets.DOCKER_USERNAME }}/productcatalogservice:${{github.run_id}}|" kubernetes/productcatalogservice/deploy.yaml
               
             - name: Commit and Push Changes

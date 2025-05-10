@@ -1,6 +1,9 @@
 name: CI
 
-on: push
+on: 
+    pull_request:
+        branches:
+        - main
 
 jobs:
     Build:
@@ -19,7 +22,7 @@ jobs:
               run: |
                 cd ./src/productcatalogservice
                 go mod download
-                go build -o product-catalog-service main.go
+                go build -o product-catalog-service
 
             - name: test
               run: |
@@ -77,7 +80,7 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v4
               with:
-                token: ${{ secrets.MY_ACTIONS_TOKEN }} #updated token
+                token: ${{ secrets.MY_ACTIONS_TOKEN }}
 
             - name: Update tag in kubernetes deployment manifest
               run: |

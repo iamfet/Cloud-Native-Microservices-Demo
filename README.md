@@ -43,7 +43,6 @@ devops-microservices-demo/
 - Terraform
 - GitHub Actions
 - Prometheus & Grafana
-- OpenTelemetry
 
 
 ---

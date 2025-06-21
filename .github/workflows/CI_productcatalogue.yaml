@@ -95,16 +95,7 @@ jobs:
                 git add kubernetes/productcatalogservice.yaml
                 git commit -m "[CI]: Update product catalog image tag"
                 git push origin HEAD:main -f
-
-            - name: Trigger kustomization update in GitOps repo
-              env: 
-                GH_TOKEN: ${{ secrets.MY_ACTIONS_TOKEN }}
-              run: |
-                curl -X POST \
-                -H "Accept: application/vnd.github+json" \
-                -H "Authorization: Bearer $GH_TOKEN" \
-                https://api.github.com/repos/iamfet/online-boutique-gitops/dispatches \
-                -d '{"event_type": "update-productcatalog-tag", "client_payload": {"new_tag": "v${{ github.run_id }}"}}'
+                
             - name: Trigger kustomization update in GitOps repo
               env: 
                 GH_TOKEN: ${{ secrets.MY_ACTIONS_TOKEN }}

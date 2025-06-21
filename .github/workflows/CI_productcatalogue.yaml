@@ -47,6 +47,7 @@ jobs:
                 version: v2.0
                 working-directory: ./src/productcatalogservice
 
+
     Docker:
         runs-on: ubuntu-latest
 
@@ -69,7 +70,7 @@ jobs:
                 context: ./src/productcatalogservice/
                 file: ./src/productcatalogservice/Dockerfile
                 push: true
-                tags: ${{ secrets.DOCKERHUB_USERNAME }}/productcatalogservice:${{ github.run_id }}
+                tags: ${{ secrets.DOCKERHUB_USERNAME }}/productcatalogservice:v${{ github.run_id }}
 
 
     updatek8s:
@@ -84,13 +85,22 @@ jobs:
 
             - name: Update tag in kubernetes deployment manifest
               run: |
-                sed -i "s|image: .*|image: ${{ secrets.DOCKERHUB_USERNAME }}/productcatalogservice:${{github.run_id}}|" kubernetes/productcatalogservice/deploy.yaml
+                sed -i "s|image: .*|image: ${{ secrets.DOCKERHUB_USERNAME }}/productcatalogservice:v${{github.run_id}}|" kubernetes/productcatalogservice.yaml
 
             - name: Commit and Push Changes
               run: |
-                git config --global user.email "fetuyee@gmail.com"
-                git config --global user.name "iamfet"
-                git add kubernetes/productcatalogservice/deploy.yaml
+                git config --global user.email "${{ secrets.USER_EMAIL }}"
+                git config --global user.name "${{ secrets.USER_NAME }}"
+                git add kubernetes/productcatalogservice.yaml
                 git commit -m "[CI]: Update product catalog image tag"
                 git push origin HEAD:main -f
 
+            - name: Trigger kustomization update in GitOps repo
+              env: 
+                GH_TOKEN: ${{ secrets.MY_ACTIONS_TOKEN }}
+              run: |
+                curl -X POST \
+                -H "Accept: application/vnd.github+json" \
+                -H "Authorization: Bearer $GH_TOKEN" \
+                https://api.github.com/repos/iamfet/online-boutique-gitops/dispatches \
+                -d '{"event_type": "update-productcatalog-tag", "client_payload": {"new_tag": "v${{ github.run_id }}"}}'

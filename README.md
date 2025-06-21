@@ -72,4 +72,5 @@ This project was built to:
 ## 📄 License & Attribution
 This project is based on the open-source microservices architecture from the [GoogleCloudPlatform/microservices-demo](https://github.com/GoogleCloudPlatform/microservices-demo) repository, licensed under the Apache 2.0 License.
 
+
 Make sure to review the license terms and keep this attribution when using the code.
